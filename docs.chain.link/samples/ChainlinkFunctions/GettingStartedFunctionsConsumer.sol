@@ -40,17 +40,47 @@ contract GettingStartedFunctionsConsumer is FunctionsClient, ConfirmedOwner {
 
     // JavaScript source code
     // Fetch character name from the Star Wars API.
-    // Documentation: https://swapi.info/people
+    // Documentation: https://suzuenftacademy.com/ArtistaInfo
     string source =
-        "const characterId = args[0];"
-        "const apiResponse = await Functions.makeHttpRequest({"
-        "url: `https://swapi.info/api/people/${characterId}/`"
-        "});"
-        "if (apiResponse.error) {"
-        "throw Error('Request failed');"
-        "}"
-        "const { data } = apiResponse;"
-        "return Functions.encodeString(data.name);";
+				"const nomeArtista = ""ArtistaExemplo"";"
+				"const url = `https://suzuenftacademy.com/ArtistaInfo.aspx?nome=${encodeURIComponent(nomeArtista)}`;"
+				"const request = Functions.makeHttpRequest({"
+				"  url: url,  // URL com o nome do artista"
+				"  method: ""GET"", "
+				"  headers: {"
+				"    ""Content-Type"": ""application/json"  
+				"  }"
+				"});"
+				"const response = await request;"
+				"if (response.status === 200) {"
+				"  const data = JSON.parse(response.data);"
+				"  if (data.erro) {"
+				"    throw new Error(data.erro);"
+				"  }"
+				"  const nome = data.nome;"
+				"  const bio = data.bio;"
+				"  const exposicoes = data.exposicoes;"
+				"  const nft_colecoes = data.nft_colecoes;"
+				"  const formacao = data.formacao;"
+				"  const conquistas = data.conquistas;"
+				"  const instagram = data.instagram;"
+				"  const twitter = data.twitter;"
+				"  return {"
+				"    nome: nome,"
+				"    bio: bio,"
+				"    exposicoes: exposicoes,"
+				"    nft_colecoes: nft_colecoes,"
+				"    formacao: formacao,"
+				"    conquistas: conquistas,"
+				"    instagram: instagram,"
+				"    twitter: twitter"
+				"  };"
+				"} else {"
+				
+				"  throw new Error(""Erro ao fazer a requisicao http para a pagina ASP.NET."");"""
+				"}";
+
+
 
     //Callback gas limit
     uint32 gasLimit = 300000;
